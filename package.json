@@ -17,5 +17,8 @@
   "bugs": {
     "url": "https://github.com/jmstman/myFlix-App/issues"
   },
-  "homepage": "https://github.com/jmstman/myFlix-App#readme"
+  "homepage": "https://github.com/jmstman/myFlix-App#readme",
+  "dependencies": {
+    "lodash": "^4.17.21"
+  }
 }
