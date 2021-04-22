@@ -1,0 +1,21 @@
+{
+  "name": "myFlix-App",
+  "version": "1.0.0",
+  "description": "-within this project, I build a server-side component of a \"movies\" Web Application. The user can access the application to info about different movies, directors, and genres.",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jmstman/myFlix-App.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jmstman/myFlix-App/issues"
+  },
+  "homepage": "https://github.com/jmstman/myFlix-App#readme"
+}
