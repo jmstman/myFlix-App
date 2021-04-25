@@ -2,7 +2,7 @@
   "name": "myFlix-App",
   "version": "1.0.0",
   "description": "-within this project, I build a server-side component of a \"movies\" Web Application. The user can access the application to info about different movies, directors, and genres.",
-  "main": "server.js",
+  "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js"
@@ -12,7 +12,7 @@
     "url": "git+https://github.com/jmstman/myFlix-App.git"
   },
   "keywords": [],
-  "author": "",
+  "author": "James Toothman",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/jmstman/myFlix-App/issues"
@@ -21,7 +21,8 @@
   "dependencies": {
     "body-parser": "^1.19.0",
     "express": "^4.17.1",
-    "lodash": "^4.17.21"
+    "lodash": "^4.17.21",
+    "morgan": "^1.10.0"
   },
   "devDependencies": {
     "eslint": "^7.24.0"
