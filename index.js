@@ -1,7 +1,6 @@
 const express = require("express"),
   morgan = require("morgan"),
   bodyParser = require("body-parser"),
-  methodOverride = require("method-override");
 
 const app = express();
 
@@ -12,7 +11,6 @@ app.use(
 );
 
 app.use(bodyParser.json());
-app.use(methodOverride());
 
 // Invoke Morgan middleware function
 app.use(morgan("common"));
