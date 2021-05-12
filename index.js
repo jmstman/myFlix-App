@@ -2,18 +2,27 @@ const express = require("express"),
   morgan = require("morgan"),
   bodyParser = require("body-parser"),
   uuid = require("uuid");
+mongoose = require("mongoose");
+Models = require("./models.js");
 
+const Movies = Models.Movie;
+const Users = Models.User;
 const app = express();
 
 app.use(bodyParser.json());
 
+//mongoose.connect
+mongoose.connect("mongodb://localhost:27017/myFlixDB", {
+  useNewUrlParser: true,
+  useUnifiedTopology: true
+});
 // Invoke Morgan middleware function
 app.use(morgan("common"));
 
 //top movies json
 let movies = [
   {
-    title: "The godfather",
+    title: "The Godfather",
     director: "Francis Ford Coppola",
     genres: "gangster"
   },
