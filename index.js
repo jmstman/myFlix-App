@@ -22,54 +22,54 @@ app.use(morgan("common"));
 //top movies json
 let movies = [
   {
-    title: "The Godfather",
-    director: "Francis Ford Coppola",
-    genres: "gangster"
+    title: "Silence of the Lambs",
+    director: "Jonathan Demme",
+    genres: "Thriller"
   },
   {
-    title: "Pulp Fiction",
-    director: "Quentin Tarantino",
-    genres: "neo-noir black comedy"
-  },
-  {
-    title: "The Shining",
-    director: " Stanley Kubrick",
-    genres: "Horror"
-  },
-  {
-    title: "Scarface",
-    director: "Brian De Palma",
-    genres: "gangstar"
+    title: "The Departed",
+    director: "Martin Scorsese",
+    genres: "Crime"
   },
   {
     title: "Taxi Driver",
     director: "Martin Scorsese",
-    genres: "neo-noir drama"
+    genres: "Crime"
   },
   {
-    title: "Goodfellas",
-    director: "Martin Scorsese",
-    genres: "gangster"
+    title: "The Shawshank Redemption",
+    director: "Frank Darabont",
+    genres: "Drama"
   },
   {
-    title: "Psycho",
-    director: "Alfred Hitchcock",
-    genres: "psychological horror"
+    title: "The Godfather",
+    director: "Christopher Nolan",
+    genres: "Action"
   },
   {
-    title: "Bonnie and Clyde",
-    director: "Arthur Pen",
-    genres: "biographical crime"
-  },
-  {
-    title: "Schindler's List",
-    director: "Steven Spielberg",
-    genres: "historical drama"
-  },
-  {
-    title: "Django",
+    title: "Pulp Fiction",
     director: "Quentin Tarantino",
-    genres: "revisionist western"
+    genres: "Crime"
+  },
+  {
+    title: "The Good, the Bad and the Ugly",
+    director: "Sergio Leone",
+    genres: "Western"
+  },
+  {
+    title: "Forrest Gump",
+    director: "Robert Zemeckis",
+    genres: "Drama"
+  },
+  {
+    title: "Saving Private Ryan",
+    director: "Steven Spielberg",
+    genres: "Drama"
+  },
+  {
+    title: "The Dark Knight",
+    director: "Christopher Nolan",
+    genres: "Action"
   }
 ];
 //list of directors
@@ -89,7 +89,7 @@ let directors = [
   {
     name: "Alfred Hitchcock",
     bio:
-      "was an English film director, producer, and screenwriter. He is one of the most influential and widely studied filmmakers in the history of cinema. Known as the 'Master of Suspense', he directed over 50 feature films in a career",
+      "Was an English film director, producer, and screenwriter. He is one of the most influential and widely studied filmmakers in the history of cinema. Known as the 'Master of Suspense', he directed over 50 feature films in a career",
     born: "13 August 1899",
     dead: "29 April 1980)"
   }
@@ -118,16 +118,16 @@ let actors = [
 //list of genres
 let genres = [
   {
-    category: "Psychological horror",
+    category: "Action",
     description:
-      "Psychological horror usually aims to create discomfort or dread by exposing common or universal psychological and emotional vulnerabilities/fears and revealing the darker parts of the human psyche that most people may repress or deny.",
-    movies: ["The shining", "Persona", "Suspiria"]
+      "Associated with particular types of spectacle (e.g., explosions, chases, combat).",
+    movies: ["The Dark Knight"]
   },
   {
-    category: "indipendent movie",
+    category: "Drama",
     description:
-      "indie movie is a feature film or short film that is produced outside the major film studio system, in addition to being produced and distributed by independent entertainment companies.",
-    movies: ["Blue Velvet", "Eraserhead", "Ghost Dog: The Way of the Samurai"]
+      "Focused on emotions and defined by conflict, often looking to reality rather than sensationalism.",
+    movies: ["Forrest Gump", "Saving Private Ryan", "The Godfather"]
   }
 ];
 
