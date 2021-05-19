@@ -18,118 +18,8 @@ mongoose.connect("mongodb://localhost:27017/myFlixDB", {
 });
 // Invoke Morgan middleware function
 app.use(morgan("common"));
-
-//top movies json
-let movies = [
-  {
-    title: "Silence of the Lambs",
-    director: "Jonathan Demme",
-    genres: "Thriller"
-  },
-  {
-    title: "The Departed",
-    director: "Martin Scorsese",
-    genres: "Crime"
-  },
-  {
-    title: "Taxi Driver",
-    director: "Martin Scorsese",
-    genres: "Crime"
-  },
-  {
-    title: "The Shawshank Redemption",
-    director: "Frank Darabont",
-    genres: "Drama"
-  },
-  {
-    title: "The Godfather",
-    director: "Christopher Nolan",
-    genres: "Action"
-  },
-  {
-    title: "Pulp Fiction",
-    director: "Quentin Tarantino",
-    genres: "Crime"
-  },
-  {
-    title: "The Good, the Bad and the Ugly",
-    director: "Sergio Leone",
-    genres: "Western"
-  },
-  {
-    title: "Forrest Gump",
-    director: "Robert Zemeckis",
-    genres: "Drama"
-  },
-  {
-    title: "Saving Private Ryan",
-    director: "Steven Spielberg",
-    genres: "Drama"
-  },
-  {
-    title: "The Dark Knight",
-    director: "Christopher Nolan",
-    genres: "Action"
-  }
-];
-//list of directors
-let directors = [
-  {
-    name: "Quentin Tarantino",
-    bio:
-      "Quentin Tarantino is an American film director, screenwriter, producer, and actor. His films are characterized by nonlinear storylines, dark humor, aestheticization of violence, extended scenes of dialogue, ensemble casts, references to popular culture and a wide variety of other films, eclectic soundtracks primarily containing songs and score pieces from the 1960s to the 1980s, alternate history, and features of neo-noir film.",
-    born: "March 27, 1963"
-  },
-  {
-    name: "Martin Scorsese",
-    bio:
-      "Martin Scorses is an American film director, producer, screenwriter, and actor. One of the major figures of the New Hollywood era, he is widely regarded as one of the most significant and influential directors in film history.",
-    born: "November 17, 1942"
-  },
-  {
-    name: "Alfred Hitchcock",
-    bio:
-      "Was an English film director, producer, and screenwriter. He is one of the most influential and widely studied filmmakers in the history of cinema. Known as the 'Master of Suspense', he directed over 50 feature films in a career",
-    born: "13 August 1899",
-    dead: "29 April 1980)"
-  }
-];
-//list of actors
-let actors = [
-  {
-    name: "Samuel Leroy Jackson",
-    bio:
-      "is an American actor and producer. Widely regarded as one of the most popular actors of his generation, the films in which he has appeared have collectively grossed over $27 billion worldwide, making him the highest-grossing actor of all time",
-    born: "December 21, 1948"
-  },
-  {
-    name: "Alfredo James Pacino",
-    bio:
-      "is an American actor and filmmaker. In a career spanning over five decades, he has received many awards and nominations, including an Academy Award, two Tony Awards, and two Primetime Emmy Awards. He is one of the few performers to have received the Triple Crown of Acting. He has also been honored with the AFI Life Achievement Award, the Cecil B. DeMille Award, and the National Medal of Arts.",
-    born: "April 25, 1940"
-  },
-  {
-    name: "Robert Anthony De Niro Jr.",
-    bio:
-      "is an American actor, producer, and director. He is particularly known for his nine collaborations with filmmaker Martin Scorsese, and is the recipient of various accolades, including two Academy Awards, a Golden Globe Award, the Cecil B. DeMille Award, and a Screen Actors Guild Life Achievement Award. In 2009, De Niro received the Kennedy Center Honor, and received a Presidential Medal of Freedom from U.S. President Barack Obama in 2016.",
-    born: "August 17, 1943"
-  }
-];
-//list of genres
-let genres = [
-  {
-    category: "Action",
-    description:
-      "Associated with particular types of spectacle (e.g., explosions, chases, combat).",
-    movies: ["The Dark Knight"]
-  },
-  {
-    category: "Drama",
-    description:
-      "Focused on emotions and defined by conflict, often looking to reality rather than sensationalism.",
-    movies: ["Forrest Gump", "Saving Private Ryan", "The Godfather"]
-  }
-];
+// Serving static files
+app.use(express.static("public"));
 
 // GET requests
 app.get("/", (req, res) => {
@@ -139,71 +29,180 @@ app.get("/documentation", (req, res) => {
   res.sendFile("public/documentation.html", { root: __dirname });
 });
 
-//defines ulr movies and response with json
+//Get all users
+app.get("/users", (req, res) => {
+  Users.find()
+    .then(users => {
+      res.status(201).json(users);
+    })
+    .catch(error => {
+      console.error(err);
+      res.status(500).send("Error: " + err);
+    });
+});
+
+//Get a user by username
+app.get("/users/:Username", (req, res) => {
+  Users.findOne({ Username: req.params.Username })
+    .then(user => {
+      res.json(user);
+    })
+    .catch(err => {
+      console.error(err);
+      res.status(500).send("Error: " + err);
+    });
+});
+
+//Get request for ALL movies
 app.get("/movies", (req, res) => {
-  res.json(movies);
-});
-//create routes and define response sending json object
-app.get("/movies/:title", (req, res) => {
-  res.json(
-    movies.find(movies => {
-      return movies.title === req.params.title;
+  Movies.find()
+    .then(movies => {
+      res.status(201).json(movies);
     })
-  );
-});
-//create routes and send directors json object
-app.get("/directors", (req, res) => {
-  res.json(directors);
-});
-//create route and send json object by name
-app.get("/directors/:name", (req, res) => {
-  res.json(
-    directors.find(directors => {
-      return directors.name === req.params.name;
-    })
-  );
-});
-app.get("/actors", (req, res) => {
-  res.json(actors);
-});
-app.get("/actors/:name", (req, res) => {
-  res.json(
-    actors.find(actors => {
-      return actors.name === req.params.name;
-    })
-  );
-});
-app.get("/genres", (req, res) => {
-  res.json(genres);
-});
-app.post("/users/:username", (req, res) => {
-  res.send("user add");
+    .catch(err => {
+      console.error(err);
+      res.status(500).send("Error: " + err);
+    });
 });
 
-app.delete("/users/:username", (req, res) => {
-  res.send("user was deleted");
+//Get request about a movie by Title
+app.get("/movies/:Title", (req, res) => {
+  Movies.findOne({ Title: req.params.Title })
+    .then(movie => {
+      res.status(201).json(movie);
+    })
+    .catch(err => {
+      console.error(err);
+      res.status(500).send("Error: " + err);
+    });
 });
-app.get("/users/:username/favorites", (req, res) => {
-  res.send("list of favorites");
-});
-app.post("/users/:username/favorites", (req, res) => {
-  res.send("add list favorites");
-});
-app.delete("/users/:username/favorites/:movie", (req, res) => {
-  res.send("remove from favorites");
-});
-app.get("/users/:username/favorites/watchlist", (req, res) => {
-  res.send("all movies to the watchlist");
-});
-app.post("/users/:username/favorites/watchlist:movie", (req, res) => {
-  res.send("add to favorites");
-});
-app.delete("/users/:username/favorites/watchlist:movie", (req, res) => {
-  res.send("delete from watchlist");
+//Get request about a specific Genre
+app.get("/movies/genres/:Genre", (req, res) => {
+  Movies.findOne({ "Genre.Name": req.params.Genre })
+    .then(genre => {
+      res.status(201).json(genre.Genre);
+    })
+    .catch(err => {
+      console.error(err);
+      res.status(500).send("Error: " + err);
+    });
 });
 
-// Serving static files
-app.use(express.static("public"));
+//Get request about a specific Director by name
+app.get("/movies/director/:Name", (req, res) => {
+  Movies.findOne({ "Director.Name": req.params.Name })
+    .then(director => {
+      res.status(201).json(director.Director);
+    })
+    .catch(err => {
+      console.error(err);
+      res.status(500).send("Error: " + err);
+    });
+});
+
+//POST request to create a new user
+app.post('/users', (req, res) => {
+    Users.findOne({ Username: req.body.Username })
+      .then(user => {
+        if (user) {
+          return res.status(400).send(req.body.Username + " already exists");
+        } else {
+          Users.create({
+            Username: req.body.Username,
+            Password: req.body.Password,
+            Email: req.body.Email,
+            Birthday: req.body.Birthday
+          })
+            .then(user => {
+              res.status(201).json(user);
+            })
+            .catch(error => {
+              console.error(error);
+              res.status(500).send("Error: " + error);
+            });
+        }
+      })
+      .catch(error => {
+        console.error(error);
+        res.status(500).send("Error: " + error);
+      });
+  }
+);
+
+//PUT request to update an existing user
+app.put('/users/:Username', (req, res) => {
+    Users.findOneAndUpdate(
+      { Username: req.params.Username },
+      {
+        $set: {
+          Username: req.body.Username,
+          Password: req.body.Password,
+          Email: req.body.Email,
+          Birthday: req.body.Birthday
+        }
+      },
+      { new: true },
+      (err, updatedUser) => {
+        if (err) {
+          console.error(err);
+          res.status(500).send("Error: " + err);
+        } else {
+          res.json(updatedUser);
+        }
+      }
+    );
+  }
+);
+
+//POST request to add a movie (by movieID) to a user's favorite movie list.
+app.post("/users/:Username/favorites/:MovieID", (req, res) => {
+    Users.findOneAndUpdate(
+      { Username: req.params.Username },
+      { $push: { FavoriteMovies: req.params.MovieID } },
+      { new: true },
+      (err, updatedUser) => {
+        if (err) {
+          console.error(err);
+          res.status(500).send("Error: " + err);
+        } else {
+          res.json(updatedUser);
+        }
+      }
+    );
+  }
+);
+//DELETE request to delete a user (by username)
+app.delete("/users/:Username", (req, res) => {
+  Users.findOneAndRemove({ Username: req.params.Username })
+    .then(user => {
+      if (!user) {
+        res.status(400).send(req.params.Username + " was not found.");
+      } else {
+        res.status(200).send(req.params.Username + " was deleted.");
+      }
+    })
+    .catch(err => {
+      console.error(err);
+      res.status(500).send("Error: " + err);
+    });
+});
+
+//DELETE request to remove a movie (by movieID) from a user's favourite movie list.
+app.delete("/users/:Username/favorites/:MovieID", (req, res) => {
+  Users.findOneAndUpdate(
+    { Username: req.params.Username },
+    { $pull: { FavoriteMovies: req.params.MovieID } },
+    { new: true },
+    (err, updatedUser) => {
+      if (err) {
+        console.error(err);
+        res.status(500).send("Error: " + err);
+      } else {
+        res.json(updatedUser);
+      }
+    }
+  );
+});
 
 //Error Handling
 app.use((err, req, res, next) => {
@@ -211,7 +210,7 @@ app.use((err, req, res, next) => {
   res.status(500).send("Something went wrong, try again later!");
 });
 
-//GET request to have a list of ALL movies in the Databas
+//GET request to have a list of ALL movies in the Database
 app.listen(8080, () => {
   console.log("Your app is listening on port 8080.");
 });
