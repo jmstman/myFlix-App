@@ -4,10 +4,10 @@ const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 const models = require("./models.js");
 
-const movies = models.Movie;
-const users = models.User;
-const genres = models.Genre;
-const directors = models.Director;
+const Movies = models.Movie;
+const Users = models.User;
+const Genres = models.Genre;
+const Directors = models.Director;
 const app = express();
 
 app.use(bodyParser.json());
@@ -33,8 +33,7 @@ app.get("/documentation", (req, res) => {
 
 //GET request for all users
 app.get("/users", (req, res) => {
-  users
-    .find()
+  Users.find()
     .then(users => {
       res.status(201).json(users);
     })
@@ -58,8 +57,7 @@ app.get("/users/:Username", (req, res) => {
 
 //GET request for ALL movies
 app.get("/movies", (req, res) => {
-  movies
-    .find()
+  Movies.find()
     .then(movies => {
       res.status(201).json(movies);
     })
@@ -71,8 +69,7 @@ app.get("/movies", (req, res) => {
 
 //GET request about a movie by Title
 app.get("/movies/:Title", (req, res) => {
-  movies
-    .findOne({ Title: req.params.Title })
+  Movies.findOne({ Title: req.params.Title })
     .then(movies => {
       res.status(201).json(movies);
     })
@@ -84,8 +81,7 @@ app.get("/movies/:Title", (req, res) => {
 
 //GET request about all Genres
 app.get("/genres", (req, res) => {
-  genres
-    .find()
+  Genres.find()
     .then(genres => {
       res.status(201).json(genres);
     })
@@ -97,8 +93,7 @@ app.get("/genres", (req, res) => {
 
 //GET request about a genre by name
 app.get("genres/:Name", (req, res) => {
-  genres
-    .findOne({ Name: req.params.Name })
+  Genres.findOne({ Name: req.params.Name })
     .then(genres => {
       res.status(201).json(genres);
     })
@@ -110,8 +105,7 @@ app.get("genres/:Name", (req, res) => {
 
 //Get request for ALL directors
 app.get("/directors", (req, res) => {
-  directors
-    .find()
+  Directors.find()
     .then(directors => {
       res.status(201).json(directors);
     })
@@ -123,8 +117,7 @@ app.get("/directors", (req, res) => {
 
 //Get request about a specific Director by name
 app.get("/directors/:Name", (req, res) => {
-  directors
-    .findOne({ Name: req.params.Name })
+  Directors.findOne({ Name: req.params.Name })
     .then(directors => {
       res.status(201).json(directors);
     })
@@ -222,7 +215,7 @@ app.delete("/users/:Username", (req, res) => {
 
 //DELETE request to remove a movie (by movieID) from a user's favorite movie list.
 app.delete("/users/:username/Favorites/:MovieID", (req, res) => {
-  users.findOneAndUpdate(
+  Users.findOneAndUpdate(
     { Username: req.params.Username },
     { $pull: { FavoriteMovies: req.params.MovieID } },
     { new: true },
