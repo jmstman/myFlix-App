@@ -92,7 +92,7 @@ app.get("/genres", (req, res) => {
 });
 
 //GET request about a genre by name
-app.get("genres/:Name", (req, res) => {
+app.get("/genres/:Name", (req, res) => {
   Genres.findOne({ Name: req.params.Name })
     .then(genres => {
       res.status(201).json(genres);
@@ -180,7 +180,7 @@ app.put("/users/:Username", (req, res) => {
 });
 
 //POST request to add a movie (by movieID) to a user's favorite movie list.
-app.post("/users/:Username/Movies/:MovieID", (req, res) => {
+app.post("/users/:Username/Favorites/:MovieID", (req, res) => {
   Users.findOneAndUpdate(
     { Username: req.params.Username },
     {
@@ -215,19 +215,18 @@ app.delete("/users/:Username", (req, res) => {
 
 //DELETE request to remove a movie (by movieID) from a user's favorite movie list.
 app.delete("/users/:username/Favorites/:MovieID", (req, res) => {
-  Users.findOneAndUpdate(
-    { Username: req.params.Username },
-    { $pull: { FavoriteMovies: req.params.MovieID } },
-    { new: true },
-    (err, updatedUser) => {
-      if (err) {
-        console.error(err);
-        res.status(500).send("Error: " + err);
+  Users.findOneAndUpdate({ FavoriteMovies: req.params.MovieID }, { new: true })
+    .then(FavMov => {
+      if (!FavMov) {
+        res.status(400).send(req.params.MovieID + " was not found");
       } else {
-        res.json(updatedUser);
+        res.status(200).send(req.params.MovieID + " was deleted.");
       }
-    }
-  );
+    })
+    .catch(err => {
+      console.error(err);
+      res.status(500).send("Error: " + err);
+    });
 });
 
 //Error Handling
