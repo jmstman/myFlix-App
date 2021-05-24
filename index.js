@@ -214,19 +214,20 @@ app.delete("/users/:Username", (req, res) => {
 });
 
 //DELETE request to remove a movie (by movieID) from a user's favorite movie list.
-app.delete("/users/:username/Favorites/:MovieID", (req, res) => {
-  Users.findOneAndUpdate({ FavoriteMovies: req.params.MovieID }, { new: true })
-    .then(FavMov => {
-      if (!FavMov) {
-        res.status(400).send(req.params.MovieID + " was not found");
+app.delete("/users/:Username/Favorites/:MovieID", (req, res) => {
+  Users.findOneAndUpdate(
+    { Username: req.params.Username },
+    { $pull: { FavoriteMovies: req.params.MovieID } },
+    { new: true },
+    (err, updatedUser) => {
+      if (err) {
+        console.error(err);
+        res.status(500).send("Error: " + err);
       } else {
-        res.status(200).send(req.params.MovieID + " was deleted.");
+        res.json(updatedUser);
       }
-    })
-    .catch(err => {
-      console.error(err);
-      res.status(500).send("Error: " + err);
-    });
+    }
+  );
 });
 
 //Error Handling
