@@ -2,15 +2,21 @@ const express = require("express");
 const morgan = require("morgan");
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
+const passport = require("passport");
 const models = require("./models.js");
 
 const Movies = models.Movie;
 const Users = models.User;
 const Genres = models.Genre;
 const Directors = models.Director;
-const app = express();
 
+const app = express();
 app.use(bodyParser.json());
+//Imports auth.js for logins
+const auth = require("./auth")(app);
+require("./passport");
+// Invoke Morgan middleware function
+app.use(morgan("common"));
 
 //mongoose.connect
 mongoose.set("useFindAndModify", false);
@@ -18,8 +24,7 @@ mongoose.connect("mongodb://localhost:27017/myFlixDB", {
   useNewUrlParser: true,
   useUnifiedTopology: true
 });
-// Invoke Morgan middleware function
-app.use(morgan("common"));
+
 // Serving static files
 app.use(express.static("public"));
 
@@ -56,16 +61,20 @@ app.get("/users/:Username", (req, res) => {
 });
 
 //GET request for ALL movies
-app.get("/movies", (req, res) => {
-  Movies.find()
-    .then(movies => {
-      res.status(201).json(movies);
-    })
-    .catch(err => {
-      console.error(err);
-      res.status(500).send("Error: " + err);
-    });
-});
+app.get(
+  "/movies",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    Movies.find()
+      .then(movies => {
+        res.status(201).json(movies);
+      })
+      .catch(err => {
+        console.error(err);
+        res.status(500).send("Error: " + err);
+      });
+  }
+);
 
 //GET request about a movie by Title
 app.get("/movies/:Title", (req, res) => {
