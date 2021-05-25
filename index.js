@@ -3,12 +3,10 @@ const morgan = require("morgan");
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 const passport = require("passport");
-const models = require("./models.js");
+const Models = require("./models.js");
 
-const Movies = models.Movie;
-const Users = models.User;
-const Genres = models.Genre;
-const Directors = models.Director;
+const Movies = Models.Movie;
+const Users = Models.User;
 
 const app = express();
 app.use(bodyParser.json());
@@ -105,7 +103,7 @@ app.get(
   "/genres",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
-    Genres.find()
+    Movies.find()
       .then(genres => {
         res.status(201).json(genres);
       })
@@ -118,12 +116,12 @@ app.get(
 
 //GET request about a genre by name
 app.get(
-  "/genres/:Name",
+  "/movies/genre/:Name",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
-    Genres.findOne({ Name: req.params.Name })
-      .then(genres => {
-        res.status(201).json(genres);
+    Movies.findOne({ "Genre.Name": req.params.Name })
+      .then(genre => {
+        res.status(201).json(genre);
       })
       .catch(err => {
         console.error(err);
@@ -137,7 +135,7 @@ app.get(
   "/directors",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
-    Directors.find()
+    Movies.find()
       .then(directors => {
         res.status(201).json(directors);
       })
@@ -150,12 +148,12 @@ app.get(
 
 //Get request about a specific Director by name
 app.get(
-  "/directors/:Name",
+  "/movies/director/:Name",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
-    Directors.findOne({ Name: req.params.Name })
-      .then(directors => {
-        res.status(201).json(directors);
+    Movies.findOne({ "Director.Name": req.params.Name })
+      .then(director => {
+        res.status(201).json(director);
       })
       .catch(err => {
         console.error(err);
