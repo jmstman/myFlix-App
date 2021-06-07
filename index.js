@@ -21,7 +21,7 @@ require("./passport");
 app.use(morgan("common"));
 
 // Specifies that app uses CORS (cross-origin resource sharing). Allows requests from all origins for the moment
-const allowedOrigins = ["http://localhost:8080", "http://myFlix-App.com"];
+const allowedOrigins = ["http://localhost:8080", "http://paradiseflix.com"];
 
 app.use(
   cors({
