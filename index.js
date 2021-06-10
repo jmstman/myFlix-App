@@ -57,7 +57,7 @@ app.use(express.static("public"));
 
 // GET requests
 app.get("/", (req, res) => {
-  res.send("Welcome to the myFlix App!");
+  res.send("Welcome to ParadiseFlix!");
 });
 app.get("/documentation", (req, res) => {
   res.sendFile("public/documentation.html", { root: __dirname });
