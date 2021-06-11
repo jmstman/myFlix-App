@@ -212,6 +212,7 @@ app.post(
     if (!errors.isEmpty()) {
       return res.status(422).json({ errors: errors.array() });
     }
+
     // Hash the submitted password
     let hashedPassword = Users.hashPassword(req.body.Password);
 
@@ -223,7 +224,7 @@ app.post(
         } else {
           Users.create({
             Username: req.body.Username,
-            Password: req.body.Password,
+            Password: hashedPassword,
             Email: req.body.Email,
             Birthday: req.body.Birthday
           })
