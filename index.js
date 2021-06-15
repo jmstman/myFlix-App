@@ -21,7 +21,7 @@ require("./passport");
 app.use(morgan("common"));
 
 // Specifies that app uses CORS (cross-origin resource sharing). Allows requests from all origins for the moment
-const allowedOrigins = ["http://localhost:8080", "http://paradiseflix.com"];
+const allowedOrigins = [ "http://localhost:1234", "http://paradiseflix.com"];
 
 app.use(
   cors({
@@ -97,11 +97,10 @@ app.get(
 
 //GET request for ALL movies
 app.get(
-  "/movies",
-  passport.authenticate("jwt", { session: false }),
-  (req, res) => {
+  "/movies", function
+  (req, res) {
     Movies.find()
-      .then(movies => {
+      .then(function (movies) {
         res.status(201).json(movies);
       })
       .catch(err => {
