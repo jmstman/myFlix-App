@@ -5,6 +5,7 @@ const mongoose = require("mongoose");
 const passport = require("passport");
 const Models = require("./models.js");
 const cors = require("cors");
+app.use(cors());
 
 const { check, validationResult } = require("express-validator");
 
@@ -22,25 +23,25 @@ require("./passport");
 app.use(morgan("common"));
 
 // Specifies that app uses CORS (cross-origin resource sharing). Allows requests from all origins for the moment
-const allowedOrigins = [ "http://localhost:1234", "http://paradiseflix.com/login"];
+//const allowedOrigins = [ "http://localhost:1234", "http://paradiseflix.com"];
 
 //blocked out cors remove 'Access-Control-Allow-Origin'
 
-app.use(
-  cors({
-    origin: (origin, callback) => {
-      if (!origin) return callback(null, true);
-      if (allowedOrigins.indexOf(origin) === -1) {
+//app.use(
+  //cors({
+    //origin: (origin, callback) => {
+      //if (!origin) return callback(null, true);
+      //if (allowedOrigins.indexOf(origin) === -1) {
         //If a specific origin isn’t found on the list of allowed origins
-        let message =
-          "The CORS policy for this application doesn’t allow access from origin " +
-          origin;
-        return callback(new Error(message), false);
-      }
-      return callback(null, true);
-    }
-  })
-);
+        //let message =
+          //"The CORS policy for this application doesn’t allow access from origin " +
+          //origin;
+        //return callback(new Error(message), false);
+     // }
+      //return callback(null, true);
+    //}
+  //})
+//);
 
 //mongoose.connect
 mongoose.set("useFindAndModify", false);
