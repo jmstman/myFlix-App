@@ -6,7 +6,7 @@ const passport = require("passport");
 const Models = require("./models.js");
 
 const cors = require("cors");
-app.use(cors());
+//app.use(cors());
 
 const { check, validationResult } = require("express-validator");
 
