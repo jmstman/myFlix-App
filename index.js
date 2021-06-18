@@ -31,8 +31,23 @@ mongoose.set("useFindAndModify", false);
 //useNewUrlParser: true,
 //useUnifiedTopology: true
 //});
+// Specifies that app uses CORS (cross-origin resource sharing). Allows requests from all origins for the moment
+const allowedOrigins = [ "http://localhost:1234", "http://paradiseflix.com"];
 
-mongoose.connect( process.env.CONNECTION_URI, { useNewUrlParser: true, useUnifiedTopology: true });
+//blocked out cors remove 'Access-Control-Allow-Origin'
+
+app.use(cors({
+  origin: (origin, callback) => {
+    if(!origin) return callback(null, true);
+    if(allowedOrigins.indexOf(origin) === -1){ // If a specific origin isn’t found on the list of allowed origins
+      let message = 'The CORS policy for this application doesn’t allow access from origin ' + origin;
+      return callback(new Error(message ), false);
+    }
+    return callback(null, true);
+  }
+}));
+
+mongoose.connect(process.env.CONNECTION_URI, { useNewUrlParser: true, useUnifiedTopology: true });
 
 // Serving static files
 app.use(express.static("public"));
