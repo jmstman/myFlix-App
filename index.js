@@ -30,7 +30,7 @@ const allowedOrigins = [ "http://localhost:1234", "http://paradiseflix.com"];
 
 //mongoose.connect('mongodb://localhost:27017/myFlixDB', { useNewUrlParser: true, useUnifiedTopology: true });
 
-mongoose.connect(process.env.CONNECTION_URI, { useNewUrlParser: true, useUnifiedTopology: true });
+mongoose.connect( process.env.CONNECTION_URI, { useNewUrlParser: true, useUnifiedTopology: true });
 
 // Invoke Morgan middleware function
 app.use(morgan("common"));
@@ -44,12 +44,12 @@ app.get("/", (req, res) => {
 });
 app.get("/documentation", (req, res) => {
   res.sendFile("public/documentation.html", { root: __dirname });
+
 });
 
-//GET request for all users
-app.get(
-  "/users",
-  passport.authenticate("jwt", { session: false }),
+
+// GET all users
+app.get('/users', passport.authenticate('jwt', { session: false }),
   (req, res) => {
     Users.find()
       .then(users => {
